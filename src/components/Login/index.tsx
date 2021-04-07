@@ -1,27 +1,18 @@
 import React from "react";
 import { Form, Input, Button, message } from "antd";
-import { login } from "../../api";
-import { useDispatch } from "react-redux";
-import { fetchProfile } from "../../store/slices/auth";
-import { useHistory } from "react-router";
+import useLogin from "../../hooks/useLogin";
 
 const Login = () => {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const handleSubmit = React.useCallback((values) => {
-    login({
-      password: values.password,
-      email: values.username,
-    })
-      .then((response) => {
-        window.localStorage.setItem("token", response.data.token);
-        dispatch(fetchProfile());
-        history.push("/app");
-      })
-      .catch((err) => {
+  const login = useLogin();
+
+  const handleSubmit = React.useCallback(
+    (values) => {
+      login(values.username, values.password).catch((err) => {
         message.error(err.response.data.message);
       });
-  }, []);
+    },
+    [login]
+  );
 
   return (
     <Form
@@ -47,7 +38,7 @@ const Login = () => {
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Submit
+          Log In
         </Button>
       </Form.Item>
     </Form>

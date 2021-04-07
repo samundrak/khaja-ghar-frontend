@@ -55,9 +55,6 @@ const AppLayout: React.FC<{}> = (props) => {
             console.log(collapsed, type);
           }}
         >
-          {/* <div className="logo">
-            <StylishTitle level={4}>Canteen</StylishTitle>
-          </div> */}
           <Menu theme="dark" mode="inline" defaultSelectedKeys={["4"]}>
             {state.user.role === "admin" && (
               <Menu.Item key="2" icon={<VideoCameraOutlined />}>
@@ -78,9 +75,6 @@ const AppLayout: React.FC<{}> = (props) => {
                 <StylishText>Orders</StylishText>
               </Link>
             </Menu.Item>
-            {/* <Menu.Item key="4" icon={<UserOutlined />}>
-              nav 4
-            </Menu.Item> */}
           </Menu>
         </Sider>
       )}

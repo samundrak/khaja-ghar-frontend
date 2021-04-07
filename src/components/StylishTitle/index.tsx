@@ -5,6 +5,6 @@ const StyledTitle = styled(Title)`
   font-family: "Jua", sans-serif;
 `;
 const StylishTitle: React.FC<TitleProps> = (props) => {
-  return <StyledTitle>{props.children}</StyledTitle>;
+  return <StyledTitle {...props}>{props.children}</StyledTitle>;
 };
 export default StylishTitle;

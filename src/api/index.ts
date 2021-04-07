@@ -21,6 +21,15 @@ authHttpClient.interceptors.request.use((config) => {
 export function getCurrentUser() {
   return authHttpClient.get("profile");
 }
-export function login(payload: {}) {
+export function login(payload: { email: string; password: string }) {
   return httpClient.post("login", payload);
+}
+export function register(payload: {
+  username: string;
+  password: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+}) {
+  return httpClient.post("register", payload);
 }
