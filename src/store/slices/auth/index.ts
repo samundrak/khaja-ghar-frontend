@@ -14,8 +14,14 @@ const initialState: AuthState = {
 export const fetchProfile = createAsyncThunk(
   "auth/profile",
   async (_, thunkApi) => {
-    const user = await getCurrentUser();
-    thunkApi.dispatch(actions.setAuth(user.data));
+    try {
+      thunkApi.dispatch(actions.setAuthStatus(AuthStateStatus.PENDING));
+      const user = await getCurrentUser();
+      thunkApi.dispatch(actions.setAuth(user.data));
+      thunkApi.dispatch(actions.setAuthStatus(AuthStateStatus.SUCCESS));
+    } catch (err) {
+      thunkApi.dispatch(actions.setAuthStatus(AuthStateStatus.REJECTED));
+    }
   }
 );
 const authSlice = createSlice({
@@ -24,6 +30,9 @@ const authSlice = createSlice({
   reducers: {
     setAuth(state, action) {
       state.user = action.payload;
+    },
+    setAuthStatus(state, action) {
+      state.status = action.payload;
     },
   },
 });
