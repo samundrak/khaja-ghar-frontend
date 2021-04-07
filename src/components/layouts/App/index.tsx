@@ -12,7 +12,6 @@ import { fetchProfile } from "../../../store/slices/auth";
 import StylishText from "../../StylishText";
 import { Link, useHistory } from "react-router-dom";
 import { AuthStateStatus } from "../../../enums/AuthStateEnum";
-import { unwrapResult } from "@reduxjs/toolkit";
 import AuthMenu from "../../AuthMenu";
 const { Header, Sider, Content } = Layout;
 

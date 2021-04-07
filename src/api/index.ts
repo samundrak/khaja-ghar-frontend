@@ -33,3 +33,12 @@ export function register(payload: {
 }) {
   return httpClient.post("register", payload);
 }
+export function updateProfile(userId: string, payload: {}) {
+  return authHttpClient.patch("users/" + userId, payload);
+}
+export function getFoods() {
+  return authHttpClient.get("foods");
+}
+export function orderFood(payload: {}) {
+  return authHttpClient.post("orders", payload);
+}

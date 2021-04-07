@@ -34,7 +34,11 @@ const authSlice = createSlice({
     setAuthStatus(state, action) {
       state.status = action.payload;
     },
+    updateProfileAction(state, action) {
+      Object.assign(state.user, action.payload);
+    },
   },
 });
 const { reducer, actions } = authSlice;
+export const { updateProfileAction } = actions;
 export default reducer;

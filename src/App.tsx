@@ -6,6 +6,7 @@ import AppLayout from "./components/layouts/App";
 import Foods from "./pages/Foods";
 import Dash from "./pages/App";
 import Register from "./pages/Register";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/app" component={Dash} />
           <Route path="/foods" component={Foods} />
           <Route path="/register" component={Register} />
+          <Route path="/profile" component={EditProfile} />
         </Switch>
       </AppLayout>
     </div>

@@ -3,6 +3,7 @@ import { DownOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const AuthMenu = () => {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -17,13 +18,7 @@ const AuthMenu = () => {
       overlay={
         <Menu>
           <Menu.Item key="0">
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.antgroup.com"
-            >
-              Edit
-            </a>
+            <Link to="/profile">Edit</Link>
           </Menu.Item>
 
           <Menu.Divider />
