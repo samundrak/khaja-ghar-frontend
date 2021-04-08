@@ -1,10 +1,11 @@
 import React from "react";
-import { Card, Col, Dropdown, Menu, message, Row } from "antd";
+import { Button, Card, Col, Dropdown, Menu, message, Row } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { getFoods, orderFood } from "../../api";
 import { IFood } from "../../interfaces/IFood";
 import ImgMomo from "../../images/momo.jpg";
 import { Link } from "react-router-dom";
+import Modal from "antd/lib/modal/Modal";
 
 const { Meta } = Card;
 
@@ -35,46 +36,64 @@ const Foods = () => {
       setFoods(response.data);
     });
   }, []);
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
 
   return (
-    <Row>
-      {foods.map((food) => {
-        return (
-          <Col span={6}>
-            <Card
-              style={{ width: 300, marginTop: 16 }}
-              cover={<img alt="Mo:Mo" src={ImgMomo} />}
-              actions={[
-                <Dropdown
-                  overlay={
-                    <Menu onClick={handleFoodOrder(food)}>
-                      <Menu.Item key="morning">Morning</Menu.Item>
-                      <Menu.Item key="day">Day</Menu.Item>
-                      <Menu.Item key="night">Night</Menu.Item>
-                    </Menu>
-                  }
-                >
-                  <a
-                    className="ant-dropdown-link"
-                    onClick={(e) => e.preventDefault()}
+    <>
+      <Modal
+        title="Add new food"
+        visible={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
+
+      <Row>
+        <Col span={12} offset={16}>
+          <Button type="primary" onClick={() => setIsModalVisible(true)}>
+            + Add Food
+          </Button>
+        </Col>
+        {foods.map((food) => {
+          return (
+            <Col span={6}>
+              <Card
+                style={{ width: 300, marginTop: 16 }}
+                cover={<img alt="Mo:Mo" src={ImgMomo} />}
+                actions={[
+                  <Dropdown
+                    overlay={
+                      <Menu onClick={handleFoodOrder(food)}>
+                        <Menu.Item key="morning">Morning</Menu.Item>
+                        <Menu.Item key="day">Day</Menu.Item>
+                        <Menu.Item key="night">Night</Menu.Item>
+                      </Menu>
+                    }
                   >
-                    Order <DownOutlined />
-                  </a>
-                </Dropdown>,
-              ]}
-            >
-              <Meta
-                // avatar={
-                //   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                // }
-                title={food.name}
-                description={`${food.price} RS`}
-              />
-            </Card>
-          </Col>
-        );
-      })}
-    </Row>
+                    <a
+                      className="ant-dropdown-link"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Order <DownOutlined />
+                    </a>
+                  </Dropdown>,
+                ]}
+              >
+                <Meta
+                  // avatar={
+                  //   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                  // }
+                  title={food.name}
+                  description={`${food.price} RS`}
+                />
+              </Card>
+            </Col>
+          );
+        })}
+      </Row>
+    </>
   );
 };
 export default Foods;
