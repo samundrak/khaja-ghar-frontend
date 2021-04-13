@@ -144,7 +144,7 @@ const Foods = () => {
           .filter((food) => food.name.includes(searchTerm))
           .map((food) => {
             return (
-              <Col span={6}>
+              <Col span={6} key={food._id}>
                 <Card
                   style={{ width: 300, marginTop: 16 }}
                   cover={<img alt="Mo:Mo" src={ImgMomo} />}

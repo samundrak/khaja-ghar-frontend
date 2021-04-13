@@ -54,3 +54,9 @@ export function updateOrder(orderId: string, payload: {}) {
 export function deleteOrder(orderId: string) {
   return authHttpClient.delete(`orders/${orderId}`);
 }
+export function getUsers() {
+  return authHttpClient.get("users");
+}
+export function updateUsers(userId: string, payload: {}) {
+  return authHttpClient.patch(`users/${userId}`, payload);
+}

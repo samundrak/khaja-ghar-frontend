@@ -27,7 +27,7 @@ const AppLayout: React.FC<{}> = (props) => {
       state.status === AuthStateStatus.SUCCESS &&
       history.location.pathname === "/"
     ) {
-      history.push("/app");
+      history.push("/foods");
     }
   }, [history, state.status]);
 
@@ -83,7 +83,7 @@ const AppLayout: React.FC<{}> = (props) => {
           style={{ padding: 1 }}
         >
           <Row>
-            <Col span={20}>
+            <Col span={20} push={10}>
               <StylishTitle level={2}>Khaja Ghar</StylishTitle>
             </Col>
             <Col>{state.user && <AuthMenu />}</Col>

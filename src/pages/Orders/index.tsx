@@ -121,7 +121,7 @@ const Orders = () => {
       },
     ];
     return [...columns].concat(actionColumn);
-  }, [handleActions]);
+  }, [handleActions, state.user?.role]);
 
   return <Table columns={memoizedTableColumns} dataSource={data?.data} />;
 };

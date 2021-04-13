@@ -16,7 +16,7 @@ const useLogin = () => {
       });
       window.localStorage.setItem("token", response.data.token);
       dispatch(fetchProfile());
-      history.push("/app");
+      history.push("/foods");
     },
     [dispatch, history]
   );
