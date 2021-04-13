@@ -1,13 +1,13 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 
 export const authHttpClient = axios.create({
-  baseURL: " http://localhost:3000/api/auth/",
+  baseURL: `${process.env.REACT_APP_HOST_ADDRESS}api/auth/`,
   timeout: 1000,
   headers: {},
 });
 
 export const httpClient = axios.create({
-  baseURL: " http://localhost:3000/api/",
+  baseURL: `${process.env.REACT_APP_HOST_ADDRESS}api/`,
   timeout: 1000,
   headers: {},
 });
