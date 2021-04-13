@@ -42,3 +42,6 @@ export function getFoods() {
 export function orderFood(payload: {}) {
   return authHttpClient.post("orders", payload);
 }
+export function createNewFood(payload: FormData | {}) {
+  return authHttpClient.post("foods", payload);
+}
