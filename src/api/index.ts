@@ -45,3 +45,12 @@ export function orderFood(payload: {}) {
 export function createNewFood(payload: FormData | {}) {
   return authHttpClient.post("foods", payload);
 }
+export function getOrders() {
+  return authHttpClient.get("orders");
+}
+export function updateOrder(orderId: string, payload: {}) {
+  return authHttpClient.patch(`orders/${orderId}`, payload);
+}
+export function deleteOrder(orderId: string) {
+  return authHttpClient.delete(`orders/${orderId}`);
+}

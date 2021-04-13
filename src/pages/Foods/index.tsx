@@ -15,8 +15,10 @@ import { DownOutlined } from "@ant-design/icons";
 import { createNewFood, getFoods, orderFood } from "../../api";
 import { IFood } from "../../interfaces/IFood";
 import ImgMomo from "../../images/momo.jpg";
-import Checkbox from "antd/lib/checkbox/Checkbox";
 import TextArea from "antd/lib/input/TextArea";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { isOwner } from "../../utils";
 
 const { Meta } = Card;
 
@@ -24,6 +26,7 @@ const Foods = () => {
   const [formResetKey, setFormResetKey] = React.useState(Date.now());
   const [foods, setFoods] = React.useState<IFood[]>([]);
   const [searchTerm, setSearchTerm] = React.useState("");
+  const state = useSelector((state: RootState) => state.auth);
 
   const handleFoodOrder = React.useCallback((food: IFood) => {
     // @ts-ignore
@@ -122,10 +125,12 @@ const Foods = () => {
       <Row>
         <Col span={24}>
           <Row>
-            <Col span={6} pull={2}>
-              <Button type="primary" onClick={() => setIsModalVisible(true)}>
-                + Add Food
-              </Button>
+            <Col span={6}>
+              {isOwner(state.user?.role) && (
+                <Button type="primary" onClick={() => setIsModalVisible(true)}>
+                  + Add Food
+                </Button>
+              )}
             </Col>
             <Col span={6} push={12}>
               <Input.Search
