@@ -44,16 +44,7 @@ const AppLayout: React.FC<{}> = (props) => {
   return (
     <Layout>
       {state.user && (
-        <Sider
-          breakpoint="lg"
-          collapsedWidth="0"
-          onBreakpoint={(broken) => {
-            console.log(broken);
-          }}
-          onCollapse={(collapsed, type) => {
-            console.log(collapsed, type);
-          }}
-        >
+        <Sider breakpoint="lg" collapsedWidth="0">
           <Menu theme="dark" mode="inline" defaultSelectedKeys={["4"]}>
             {state.user.role === "admin" && (
               <Menu.Item key="2" icon={<VideoCameraOutlined />}>

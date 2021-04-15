@@ -4,13 +4,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { updateProfile } from "../../api";
 import { updateProfileAction } from "../../store/slices/auth";
+
 const EditProfile = () => {
+  const [file, setFile] = React.useState<File | null>(null);
   const state = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
   const handleSubmit = React.useCallback(
     (values) => {
-      updateProfile(state.user?._id || "", values)
+      const formData = new FormData();
+      Object.keys(values).forEach((key) => {
+        formData.append(key, values[key]);
+      });
+      formData.delete("photo");
+      if (file) formData.append("photo", file);
+      updateProfile(state.user?._id || "", formData)
         .then(() => {
           message.info("Profile updated successfully");
           dispatch(updateProfileAction(values));
@@ -19,7 +27,7 @@ const EditProfile = () => {
           message.error("Unable to update profile.");
         });
     },
-    [dispatch, state.user?._id]
+    [dispatch, state.user?._id, file]
   );
 
   return (
@@ -55,6 +63,18 @@ const EditProfile = () => {
             ]}
           >
             <Input />
+          </Form.Item>
+          <Form.Item
+            label="Profile"
+            name="photo"
+            rules={[{ required: true, message: "Please upload a photo!" }]}
+          >
+            <Input
+              type="file"
+              onChange={(e) => {
+                setFile(e.target.files?.[0] || null);
+              }}
+            />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">

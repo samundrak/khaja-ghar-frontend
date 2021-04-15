@@ -18,11 +18,12 @@ import ImgMomo from "../../images/momo.jpg";
 import TextArea from "antd/lib/input/TextArea";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { isOwner } from "../../utils";
+import { getUploadURL, isOwner } from "../../utils";
 
 const { Meta } = Card;
 
 const Foods = () => {
+  const [files, setFiles] = React.useState<FileList | null>(null);
   const [formResetKey, setFormResetKey] = React.useState(Date.now());
   const [foods, setFoods] = React.useState<IFood[]>([]);
   const [searchTerm, setSearchTerm] = React.useState("");
@@ -31,8 +32,6 @@ const Foods = () => {
   const handleFoodOrder = React.useCallback((food: IFood) => {
     // @ts-ignore
     return (event) => {
-      console.log(event);
-      console.log(food, event);
       orderFood({
         food_id: food._id,
         //@ts-ignore
@@ -55,8 +54,17 @@ const Foods = () => {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
 
   const handleAddFood = React.useCallback(
-    (values: {}) => {
-      createNewFood(values)
+    (values) => {
+      const formData = new FormData();
+      delete values.images;
+      Object.keys(values).forEach((key) => {
+        formData.append(key, values[key]);
+      });
+      //@ts-ignore
+      Array.from(files).forEach((file) => {
+        formData.append(`images`, file);
+      });
+      createNewFood(formData)
         .then((data) => {
           setFoods([...foods, data.data]);
           message.info("Food added successfully.");
@@ -69,7 +77,7 @@ const Foods = () => {
           );
         });
     },
-    [foods]
+    [files, foods]
   );
 
   return (
@@ -114,6 +122,23 @@ const Foods = () => {
           >
             <TextArea />
           </Form.Item>
+          <Form.Item
+            label="Images"
+            name="images"
+            rules={[
+              {
+                required: true,
+                message: "Please add images!",
+              },
+            ]}
+          >
+            <Input
+              type="file"
+              multiple
+              accept="jpg,png,jpeg"
+              onChange={(e) => setFiles(e.target.files)}
+            />
+          </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
               + Add Food
@@ -147,7 +172,14 @@ const Foods = () => {
               <Col span={6} key={food._id}>
                 <Card
                   style={{ width: 300, marginTop: 16 }}
-                  cover={<img alt="Mo:Mo" src={ImgMomo} />}
+                  cover={
+                    <img
+                      alt="Mo:Mo"
+                      src={
+                        food.images[0] ? getUploadURL(food.images[0]) : ImgMomo
+                      }
+                    />
+                  }
                   actions={[
                     <Dropdown
                       overlay={

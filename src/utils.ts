@@ -8,3 +8,6 @@ export function isOwner(role?: string) {
 export function isUser(role?: string) {
   return role === "user";
 }
+export function getUploadURL(path?: string) {
+  return `${process.env.REACT_APP_HOST_ADDRESS}${path}`;
+}
